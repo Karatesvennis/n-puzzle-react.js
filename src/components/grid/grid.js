@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './grid.module.css';
 import Cell from './cell/cell';
+import Backdrop from '../backdrop/backdrop';
 
 // const CORRECT_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
@@ -9,12 +10,12 @@ class Grid extends Component {
 
   numberOfRows = 4;
 
-  showStartBtn = true;
-
   state = {
     rows: [],
     activeRow: null,
-    activeIndex: null
+    activeIndex: null,
+    isPlaying: false,
+    isGameWon: false
   };
 
   randomizeGrid = (grid) => {
@@ -57,7 +58,7 @@ class Grid extends Component {
   };
 
   createGrid = () => {
-    let newGrid = [...this.state.rows];
+    let newGrid = [];
     let num = 0;
     let activeRow = null;
     let activeIndex = null;
@@ -90,17 +91,22 @@ class Grid extends Component {
     this.clickableHandler(newGrid, activeRow, activeIndex);
 
 
-    this.setState({ rows: newGrid, activeRow: activeRow, activeIndex: activeIndex });
+    this.setState({
+      rows: newGrid,
+      activeRow: activeRow,
+      activeIndex: activeIndex,
+      isPlaying: true,
+      isGameWon: false
+    });
   };
 
   checkWinningCondition = (gridArr) => {
     let index = 1;
     gridArr.forEach(row => {
       row.forEach(cell => {
-        if (cell.number !== index) {
-          return;
-        } else if (index === this.numberOfRows * 2) {
-          alert('YOU HAVE WON!');
+        if (cell.number !== index) return;
+        else if (index === this.numberOfRows * 2) {
+          this.setState({ isPlaying: false, gameWon: true });
         }
         index++;
       });
@@ -159,6 +165,11 @@ class Grid extends Component {
     this.checkWinningCondition(grid);
   };
 
+  toggleBackdrop = (isPlaying, isGameWon) => {
+    if (isPlaying) return null;
+    return <Backdrop haveWon={isGameWon} clicked={this.createGrid} />;
+  };
+
   render() {
 
     const grid = this.state.rows.map((row, rowIndex) => row.map(
@@ -175,12 +186,14 @@ class Grid extends Component {
       }
     ));
 
+    const backdrop = this.toggleBackdrop(this.state.isPlaying, this.state.isGameWon);
+
     return (
       <React.Fragment>
+        {backdrop}
         <div className={classes.Grid}>
           {grid}
         </div>
-        <button onClick={this.createGrid}>START GAME</button>
       </React.Fragment>
     );
   }
