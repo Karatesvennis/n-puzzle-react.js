@@ -172,26 +172,28 @@ class Grid extends Component {
 
   render() {
 
-    const grid = this.state.rows.map((row, rowIndex) => row.map(
-      (cell, cellIndex) => {
-        return (<Cell
-          rowIndex={rowIndex}
-          cellIndex={cellIndex}
-          key={cell.number}
-          number={cell.number}
-          hidden={cell.hide}
-          isClickable={cell.clickable}
-          clickFunc={this.clickHandler}
-        />);
-      }
-    ));
+    const grid = this.state.rows.map((row, rowIndex) => {
+      return (<div className={classes.Row} key={rowIndex}>{row.map(
+        (cell, cellIndex) => {
+          return (<Cell
+            rowIndex={rowIndex}
+            cellIndex={cellIndex}
+            key={cell.number}
+            number={cell.number}
+            hidden={cell.hide}
+            isClickable={cell.clickable}
+            clickFunc={this.clickHandler}
+          />);
+        }
+      )}</div>);
+    });
 
     const backdrop = this.toggleBackdrop(this.state.isPlaying, this.state.isGameWon);
 
     return (
       <React.Fragment>
         {backdrop}
-        <div className={classes.Grid}>
+        <div className={classes.Rows}>
           {grid}
         </div>
       </React.Fragment>

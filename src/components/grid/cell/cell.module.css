@@ -2,16 +2,12 @@
   width: 90px;
   height: 90px;
   background: rgb(245, 245, 245);
-  display: inline-block;
   margin: 3px 4px;
   color: black;
-  text-align: center;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: default;
-}
-
-.cell p {
-  margin-top: 40%;
 }
 
 .empty {
