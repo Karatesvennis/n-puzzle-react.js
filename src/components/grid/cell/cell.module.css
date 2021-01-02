@@ -5,6 +5,7 @@
   display: inline-block;
   margin: 3px 4px;
   color: black;
+  text-align: center;
   position: relative;
   cursor: default;
 }
