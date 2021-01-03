@@ -1,7 +1,7 @@
 .cell {
   width: 90px;
   height: 90px;
-  background: rgb(245, 245, 245);
+  background: #abe2ff;
   margin: 3px 4px;
   color: black;
   display: flex;
